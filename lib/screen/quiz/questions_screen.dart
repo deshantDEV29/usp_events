@@ -19,16 +19,17 @@ class QuestionsScreen extends StatefulWidget {
 class _Questions extends State<QuestionsScreen> {
   List<Question> _question = <Question>[];
   String userAnswer = "";
+  int Quiz_id = 0;
 
   Future<List<Question>> getQuestion() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var getToken = localStorage.getString('token');
     var token = 'Bearer $getToken';
-    //var title = widget.eventsTitle.title;
 
     var data = {
       'id': widget.quizID.id,
     };
+    Quiz_id = widget.quizID.id;
 
     var response = await CallApi().postEventData(data, 'getQuestions', token);
 
@@ -66,17 +67,17 @@ class _Questions extends State<QuestionsScreen> {
     return FutureBuilder<List<Question>>(
       future: getQuestion(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
+        if (snapshot.data == null)
           return Container(
             child: Center(
               child: Text("Loading..."),
             ),
           );
 
-        if (snapshot.hasError)
-          return Text(snapshot.error.toString());
-        else if (snapshot.hasData &&
-            snapshot.connectionState == ConnectionState.done)
+        // if (snapshot.hasError)
+        //   return Text(snapshot.error.toString());
+        // // else
+        else
           return Row(
             children: [
               Expanded(
@@ -123,7 +124,7 @@ class _Questions extends State<QuestionsScreen> {
                                           .response, //selectedUser,
                                       title: Text(_question[index].option_1),
                                       onChanged: (value) {
-                                        setState(
+                                        this.setState(
                                           () {
                                             _question[index].setResponse =
                                                 value as String;
@@ -240,8 +241,6 @@ class _Questions extends State<QuestionsScreen> {
               ),
             ],
           );
-        else
-          return Text("impliment more");
       },
     );
   }
@@ -262,27 +261,12 @@ class _Questions extends State<QuestionsScreen> {
         print('incorrect');
       }
     }
-
-    print(score / total * 100);
-
-    // var res = await CallApi().postData(data, 'login');
-    // var body = json.decode(res.body);
-    // print(body);
-
-    // if (res.statusCode == 200) {
-    //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-    //   localStorage.setString('token', body['token']);
-    //   localStorage.setString('user', json.encode(body['user']));
-    //   Navigator.push(
-    //       context, new MaterialPageRoute(builder: (context) => Homepage()));
-    // } else {
-    //   _showMsg(body['message']);
-    //   print(body['message']);
-    // }
-
-    // setState(() {
-    //   _isLoading = false;
-    // });
-    //print(body);
+    double finalscore = (score / total) * 100;
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) =>
+                ScoreScreen(quizID: Quiz_id, score: finalscore)));
+    print(finalscore);
   }
 }
