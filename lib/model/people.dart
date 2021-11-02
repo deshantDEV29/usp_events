@@ -5,7 +5,7 @@ class People {
   People(this.id, this.name);
 
   People.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
+    id = json["tokenable_id"];
     name = json["name"];
   }
 }

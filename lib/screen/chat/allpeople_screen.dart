@@ -25,7 +25,6 @@ class _AllPeople_screen extends State<AllPeople_screen> {
     var token = 'Bearer $getToken';
 
     var response = await CallApi().getData(token, 'displayAllUsers');
-    print(response.body);
 
     if (response.statusCode == 200) {
       final datasJson = json.decode(response.body)["users"] as List;
@@ -67,10 +66,6 @@ class _AllPeople_screen extends State<AllPeople_screen> {
               child: Text("Loading..."),
             ),
           );
-
-        // if (snapshot.hasError)
-        //   return Text(snapshot.error.toString());
-        // // else
         else
           return Row(
             children: [

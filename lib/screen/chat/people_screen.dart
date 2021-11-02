@@ -22,7 +22,6 @@ class _PeopleScreen extends State<PeopleScreen> {
     var token = 'Bearer $getToken';
 
     var response = await CallApi().getData(token, 'displayActiveUsers');
-    print(response.body);
 
     if (response.statusCode == 200) {
       final datasJson =
