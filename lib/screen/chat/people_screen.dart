@@ -118,7 +118,7 @@ class _PeopleScreen extends State<PeopleScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return AllPeople_screen();
+                                      return AllPeoplescreen();
                                     },
                                   ),
                                 );

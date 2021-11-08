@@ -12,12 +12,12 @@ import '../drawer/drawer_state.dart';
 import 'chat.dart';
 import 'people_screen.dart';
 
-class AllPeople_screen extends StatefulWidget {
-  _AllPeople_screen createState() => _AllPeople_screen();
+class AllPeoplescreen extends StatefulWidget {
+  _AllPeoplescreen createState() => _AllPeoplescreen();
 }
 
-class _AllPeople_screen extends State<AllPeople_screen> {
-  List<People> _Allpeople = <People>[];
+class _AllPeoplescreen extends State<AllPeoplescreen> {
+  List<People> allpeople = <People>[];
 
   Future<List<People>> getActiveUsers() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -38,7 +38,7 @@ class _AllPeople_screen extends State<AllPeople_screen> {
   void initState() {
     getActiveUsers().then((value) {
       setState(() {
-        _Allpeople.addAll(value);
+        allpeople.addAll(value);
       });
     });
     super.initState();
@@ -115,7 +115,7 @@ class _AllPeople_screen extends State<AllPeople_screen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return AllPeople_screen();
+                                      return AllPeoplescreen();
                                     },
                                   ),
                                 );
@@ -162,7 +162,7 @@ class _AllPeople_screen extends State<AllPeople_screen> {
                                               width: 0.5, color: Colors.grey),
                                         ),
                                         title: Text(
-                                          "${_Allpeople[index].name}",
+                                          "${allpeople[index].name}",
                                           style: TextStyle(
                                             fontSize: 20.0,
                                             fontWeight: FontWeight.w600,
