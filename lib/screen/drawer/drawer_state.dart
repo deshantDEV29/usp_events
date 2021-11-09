@@ -53,25 +53,6 @@ class _AppDrawerState extends State<AppDrawer> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.mic),
-            title: const Text('Live Question Session'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LiveQuestion();
-                  },
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.save),
-            title: const Text('Saved'),
-            onTap: getUsername,
-          ),
-          ListTile(
             leading: Icon(Icons.chat_bubble),
             title: const Text('Chat'),
             onTap: () {
@@ -98,11 +79,6 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               );
             },
-          ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: const Text('Profile'),
-            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.logout),

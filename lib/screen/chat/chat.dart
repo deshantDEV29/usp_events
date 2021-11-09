@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:usp_events/model/recipient.dart';
 import 'package:usp_events/screen/drawer/drawer_state.dart';
 
+import 'conversation.dart';
 import 'people_screen.dart';
 
 import 'dart:convert';
@@ -97,21 +98,30 @@ class _ChatScreen extends State<ChatScreen> {
                                       padding:
                                           EdgeInsets.symmetric(vertical: 0.0),
                                       child: ListTile(
-                                        leading: Icon(Icons.person_rounded),
-                                        shape: Border(
-                                          bottom: BorderSide(
-                                              width: 0.5, color: Colors.grey),
-                                        ),
-                                        title: Text(
-                                          "${_recipient[index].name}",
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.w600,
+                                          leading: Icon(Icons.person_rounded),
+                                          shape: Border(
+                                            bottom: BorderSide(
+                                                width: 0.5, color: Colors.grey),
                                           ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                        subtitle: Text('message'),
-                                      )),
+                                          title: Text(
+                                            "${_recipient[index].name}",
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          subtitle: Text('message'),
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                new MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Conversation(
+                                                          recipient:
+                                                              _recipient[index],
+                                                        )));
+                                          })),
                                 ],
                               ),
                             ),
