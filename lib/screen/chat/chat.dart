@@ -7,12 +7,10 @@ import 'people_screen.dart';
 
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 
 import '../drawer/drawer_state.dart';
-import 'allpeople_screen.dart';
 
 class ChatScreen extends StatefulWidget {
   _ChatScreen createState() => _ChatScreen();
@@ -20,11 +18,19 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreen extends State<ChatScreen> {
   List<Recipient> _recipient = <Recipient>[];
+  String username = '';
 
   Future<List<Recipient>> getReciepients() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var getToken = localStorage.getString('token');
     var token = 'Bearer $getToken';
+    var getuser = localStorage.getString('user');
+    String turntoString = getuser.toString();
+    print(turntoString);
+    String splituser = turntoString.split(",") as String;
+    username = splituser.substring(2);
+
+    print(splituser);
 
     var response = await CallApi().getData(token, 'getConversation');
 
@@ -35,6 +41,16 @@ class _ChatScreen extends State<ChatScreen> {
     } else
       print("http error");
     return [];
+  }
+
+  String chatRoomId(String user1, String otheruser) {
+    String user2 = otheruser.toString();
+    if (user1[0].toLowerCase().codeUnits[0] >
+        user2.toLowerCase().codeUnits[0]) {
+      return "$user1$user2";
+    } else {
+      return "$user2$user1";
+    }
   }
 
   @override
@@ -56,6 +72,57 @@ class _ChatScreen extends State<ChatScreen> {
       ),
       drawer: AppDrawer(),
       body: projectWidget(),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+        child: ListTile(
+          leading: Column(
+            children: <Widget>[
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ChatScreen();
+                      },
+                    ),
+                  );
+                },
+                child: Column(
+                  // Replace with a Row for horizontal icon + text
+                  children: <Widget>[
+                    Icon(Icons.chat_bubble_rounded),
+                    Text("Chats")
+                  ],
+                ),
+              ),
+            ],
+          ),
+          trailing: Column(
+            children: <Widget>[
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return PeopleScreen();
+                      },
+                    ),
+                  );
+                },
+                child: Column(
+                  // Replace with a Row for horizontal icon + text
+                  children: <Widget>[
+                    Icon(Icons.people_alt_rounded),
+                    Text("People")
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -63,10 +130,17 @@ class _ChatScreen extends State<ChatScreen> {
     return FutureBuilder<List<Recipient>>(
       future: getReciepients(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            child: Center(
+              child: Text("Loading...."),
+            ),
+          );
+        }
         if (snapshot.data == null)
           return Container(
             child: Center(
-              child: Text("Loading..."),
+              child: Text("No message"),
             ),
           );
 
@@ -95,33 +169,37 @@ class _ChatScreen extends State<ChatScreen> {
                               child: Column(
                                 children: <Widget>[
                                   Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 0.0),
-                                      child: ListTile(
-                                          leading: Icon(Icons.person_rounded),
-                                          shape: Border(
-                                            bottom: BorderSide(
-                                                width: 0.5, color: Colors.grey),
-                                          ),
-                                          title: Text(
-                                            "${_recipient[index].name}",
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          subtitle: Text('message'),
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                new MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Conversation(
-                                                          recipient:
-                                                              _recipient[index],
-                                                        )));
-                                          })),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 0.0),
+                                    child: ListTile(
+                                      leading: Icon(Icons.person_rounded),
+                                      shape: Border(
+                                        bottom: BorderSide(
+                                            width: 0.5, color: Colors.grey),
+                                      ),
+                                      title: Text(
+                                        "${_recipient[index].name}",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      subtitle: Text('message'),
+                                      onTap: () {
+                                        // String roomId = chatRoomId(
+                                        //     username, _recipient[index].name);
+                                        // Navigator.push(
+                                        //     context,
+                                        //     new MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             Conversation(
+                                        //               chatRoomId: roomId,
+                                        //               userMap: {},
+                                        //             )));
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -130,58 +208,6 @@ class _ChatScreen extends State<ChatScreen> {
                         itemCount: snapshot.data!.length,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 25.0),
-                      child: ListTile(
-                        leading: Column(
-                          children: <Widget>[
-                            MaterialButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return ChatScreen();
-                                    },
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                // Replace with a Row for horizontal icon + text
-                                children: <Widget>[
-                                  Icon(Icons.chat_bubble_rounded),
-                                  Text("Chats")
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        trailing: Column(
-                          children: <Widget>[
-                            MaterialButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return PeopleScreen();
-                                    },
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                // Replace with a Row for horizontal icon + text
-                                children: <Widget>[
-                                  Icon(Icons.people_alt_rounded),
-                                  Text("People")
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),

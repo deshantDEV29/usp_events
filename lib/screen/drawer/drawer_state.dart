@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
+import 'package:usp_events/methods/method.dart';
 import 'package:usp_events/screen/chat/chat.dart';
 import 'package:usp_events/screen/events_des/homepage.dart';
-import 'package:usp_events/screen/live_question/live_question.dart';
 import 'package:usp_events/screen/quiz/quiz_screen.dart';
 import 'package:usp_events/screen/sign_up/login.dart';
 
@@ -95,6 +95,7 @@ class _AppDrawerState extends State<AppDrawer> {
     var data = localStorage.getString('token');
     var token = 'Bearer $data';
     print(token);
+    logOut();
 
     var res = await CallApi().logoutPostData(token, 'logout');
     var body = json.decode(res.body);

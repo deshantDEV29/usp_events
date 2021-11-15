@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
+import 'package:usp_events/methods/method.dart';
 
 import '../events_des/homepage.dart';
 import 'login.dart';
@@ -139,6 +139,7 @@ class _SignupState extends State<Signup> {
                             child: TextField(
                               autocorrect: false,
                               autofocus: false,
+                              obscureText: true,
                               style: TextStyle(fontSize: 20.0),
                               controller: passwordController,
                               keyboardType: TextInputType.text,
@@ -218,6 +219,11 @@ class _SignupState extends State<Signup> {
   }
 
   void _handleLogin() async {
+    createAccount(
+      nameController.text,
+      emailController.text,
+      passwordController.text,
+    );
     setState(() {
       _isLoading = true;
     });

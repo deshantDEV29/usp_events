@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
+import 'package:usp_events/methods/method.dart';
 
 import '../events_des/homepage.dart';
 import 'signup.dart';
@@ -173,6 +174,8 @@ class _LoginState extends State<Login> {
       _isLoading = true;
     });
 
+    logIn(emailController.text, passwordController.text);
+
     var data = {
       'email': emailController.text,
       'password': passwordController.text
@@ -186,6 +189,7 @@ class _LoginState extends State<Login> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
+      localStorage.setString('username', json.encode(body['username']));
       Navigator.push(
           context, new MaterialPageRoute(builder: (context) => Homepage()));
     } else {

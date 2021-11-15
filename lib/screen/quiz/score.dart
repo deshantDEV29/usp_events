@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 import 'package:usp_events/model/question.dart';
-import 'package:usp_events/model/quiz.dart';
 import 'package:usp_events/screen/quiz/quiz_screen.dart';
 
 import '../drawer/drawer_state.dart';
