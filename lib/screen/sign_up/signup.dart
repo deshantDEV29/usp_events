@@ -71,7 +71,13 @@ class _SignupState extends State<Signup> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 hintText: "Name",
-                                border: InputBorder.none,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
                                 filled: true,
                                 fillColor: Colors.grey.shade200,
                                 contentPadding: EdgeInsets.all(15.0),
@@ -95,7 +101,13 @@ class _SignupState extends State<Signup> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 hintText: "Email",
-                                border: InputBorder.none,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
                                 filled: true,
                                 fillColor: Colors.grey.shade200,
                                 contentPadding: EdgeInsets.all(15.0),
@@ -119,7 +131,13 @@ class _SignupState extends State<Signup> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 hintText: "Phone",
-                                border: InputBorder.none,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
                                 filled: true,
                                 fillColor: Colors.grey.shade200,
                                 contentPadding: EdgeInsets.all(15.0),
@@ -145,7 +163,13 @@ class _SignupState extends State<Signup> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 hintText: "Password",
-                                border: InputBorder.none,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
                                 filled: true,
                                 fillColor: Colors.grey.shade200,
                                 contentPadding: EdgeInsets.all(15.0),
@@ -161,6 +185,9 @@ class _SignupState extends State<Signup> {
                               vertical: 5.0,
                             ),
                             child: MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
                               minWidth: 250.0,
                               splashColor: Colors.blue.shade900,
                               color: Colors.blue,
@@ -168,13 +195,13 @@ class _SignupState extends State<Signup> {
                                 vertical: 10.0,
                               ),
                               child: Text(
-                                _isLoading ? 'Creating...' : 'Register',
+                                'Register',
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   color: Colors.white,
                                 ),
                               ),
-                              onPressed: _isLoading ? null : _handleLogin,
+                              onPressed: _handleLogin,
                             ),
                           ),
                           Padding(

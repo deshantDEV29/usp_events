@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 import 'package:usp_events/model/quiz.dart';
+import 'package:usp_events/screen/quiz/quizAttempt.dart';
 
 import '../drawer/drawer_state.dart';
 import 'questions_screen.dart';
@@ -14,12 +15,16 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreen extends State<QuizScreen> {
   List<Quiz> _quiz = <Quiz>[];
+  int userID = 0;
 
   Future<List<Quiz>> getQuiz() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var getToken = localStorage.getString('token');
     var token = 'Bearer $getToken';
     var response = await CallApi().getData(token, 'getQuiz');
+    var getuser = localStorage.getString('user');
+    String userid = getuser!.substring(6, getuser.indexOf(','));
+    userID = int.parse(userid);
 
     if (response.statusCode == 200) {
       final datasJson = json.decode(response.body)["quizzes"] as List;
@@ -27,6 +32,11 @@ class _QuizScreen extends State<QuizScreen> {
     } else
       print("http error");
     return [];
+  }
+
+  String quizAttemptId(int quizID, int userID) {
+    print("$quizID$userID");
+    return "$quizID$userID";
   }
 
   @override
@@ -53,7 +63,7 @@ class _QuizScreen extends State<QuizScreen> {
           if (snapshot.connectionState == ConnectionState.waiting)
             return Container(
               child: Center(
-                child: Text("Loading..."),
+                child: CircularProgressIndicator(),
               ),
             );
 
@@ -75,11 +85,15 @@ class _QuizScreen extends State<QuizScreen> {
                           ),
                           textAlign: TextAlign.center),
                       onTap: () {
+                        String quizAttemptRoom =
+                            quizAttemptId(_quiz[index].id, userID);
                         Navigator.push(
                             context,
                             new MaterialPageRoute(
-                                builder: (context) =>
-                                    QuestionsScreen(quizID: _quiz[index])));
+                                builder: (context) => QuizAttempt(
+                                      quizID: _quiz[index],
+                                      quizAttemptID: quizAttemptRoom,
+                                    )));
                       },
                     ),
                   ),

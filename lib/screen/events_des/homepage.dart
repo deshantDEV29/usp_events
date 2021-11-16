@@ -50,10 +50,30 @@ class _Homepage extends State<Homepage> {
           future: displayDetails(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting)
-              return Container(
-                child: Center(
-                  child: Text("Loading..."),
-                ),
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 340.0,
+                                height: 10.0,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                // CircularProgressIndicator()
+                itemCount: 7,
               );
 
             if (snapshot.hasError)
@@ -65,29 +85,31 @@ class _Homepage extends State<Homepage> {
                   return Card(
                     elevation: 2.0,
                     child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: ListTile(
-                            title: Text(_events[index].title,
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                textAlign: TextAlign.center),
-                            subtitle: Text(
-                              _events[index].eventSchedule,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                              ),
+                      padding: EdgeInsets.all(8.0),
+                      child: ListTile(
+                        title: Text(_events[index].title,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
                             ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => EventDetail(
-                                          eventsTitle: _events[index])));
-                            })),
+                            textAlign: TextAlign.center),
+                        subtitle: Text(
+                          _events[index].eventSchedule,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => EventDetail(
+                                      eventsTitle: _events[index])));
+                        },
+                      ),
+                    ),
                     color: Colors.amber.shade300,
                   );
                 },

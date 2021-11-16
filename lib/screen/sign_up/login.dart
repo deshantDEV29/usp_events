@@ -84,7 +84,13 @@ class _LoginState extends State<Login> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 hintText: "Email",
-                                border: InputBorder.none,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
                                 filled: true,
                                 fillColor: Colors.grey.shade200,
                                 contentPadding: EdgeInsets.all(15.0),
@@ -104,7 +110,13 @@ class _LoginState extends State<Login> {
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               hintText: "Password",
-                              border: InputBorder.none,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide(
+                                  width: 0,
+                                  style: BorderStyle.none,
+                                ),
+                              ),
                               filled: true,
                               fillColor: Colors.grey.shade200,
                               contentPadding: EdgeInsets.all(15.0),
@@ -119,7 +131,10 @@ class _LoginState extends State<Login> {
                               vertical: 15.0,
                             ),
                             child: MaterialButton(
-                              onPressed: _isLoading ? null : _login,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              onPressed: _login,
                               minWidth: 250.0,
                               splashColor: Colors.blue.shade900,
                               color: Colors.blue,
@@ -127,7 +142,7 @@ class _LoginState extends State<Login> {
                                 vertical: 10.0,
                               ),
                               child: Text(
-                                _isLoading ? 'Logging...' : 'Login',
+                                'Login',
                                 textDirection: TextDirection.ltr,
                                 style: TextStyle(
                                   fontSize: 18.0,
@@ -200,6 +215,5 @@ class _LoginState extends State<Login> {
     setState(() {
       _isLoading = false;
     });
-    //print(body);
   }
 }

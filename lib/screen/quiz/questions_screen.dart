@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
@@ -9,8 +11,11 @@ import 'package:usp_events/screen/quiz/score.dart';
 import '../drawer/drawer_state.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({Key? key, required this.quizID}) : super(key: key);
+  const QuestionsScreen(
+      {Key? key, required this.quizID, required this.quizAttemptId})
+      : super(key: key);
   final Quiz quizID;
+  final String quizAttemptId;
 
   _Questions createState() => _Questions();
 }
@@ -19,6 +24,8 @@ class _Questions extends State<QuestionsScreen> {
   List<Question> _question = <Question>[];
   String userAnswer = "";
   int Quiz_id = 0;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<List<Question>> getQuestion() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -69,7 +76,7 @@ class _Questions extends State<QuestionsScreen> {
         if (snapshot.data == null)
           return Container(
             child: Center(
-              child: Text("Loading..."),
+              child: CircularProgressIndicator(),
             ),
           );
 
@@ -260,7 +267,20 @@ class _Questions extends State<QuestionsScreen> {
         print('incorrect');
       }
     }
-    double finalscore = (score / total) * 100;
+    double finalscore = ((score / total) * 100);
+    String finalscore2 = finalscore.toString();
+
+    Map<String, dynamic> quizAttempt = {
+      "score": finalscore2,
+      "type": "text",
+      "time": FieldValue.serverTimestamp(),
+    };
+
+    await _firestore
+        .collection('quizAttemptRoom')
+        .doc(widget.quizAttemptId)
+        .collection('quizAttempt')
+        .add(quizAttempt);
     Navigator.push(
         context,
         new MaterialPageRoute(

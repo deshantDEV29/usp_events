@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 import 'package:usp_events/model/events.dart';
 import 'package:usp_events/model/eventstitle.dart';
+import 'package:usp_events/screen/live_question/SessionScreen.dart';
 
 import '../drawer/drawer_state.dart';
 
@@ -67,9 +68,7 @@ class _EventDetail extends State<EventDetail> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting)
               return Container(
-                child: Center(
-                  child: Text("Loading..."),
-                ),
+                child: Center(child: CircularProgressIndicator()),
               );
 
             if (snapshot.hasError)
@@ -221,6 +220,36 @@ class _EventDetail extends State<EventDetail> {
                               textAlign: TextAlign.justify,
                               overflow: TextOverflow.fade,
                             ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 30.0, horizontal: 10.0),
+                          child: MaterialButton(
+                            splashColor: Colors.blue.shade900,
+                            color: Colors.deepOrangeAccent.shade200,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              side: BorderSide(
+                                  color: Colors.deepOrangeAccent.shade200,
+                                  width: 2.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            child: Text(
+                              "Join Session",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) =>
+                                          SessionScreen(event: events[index])));
+                            },
                           ),
                         )
                       ]);
