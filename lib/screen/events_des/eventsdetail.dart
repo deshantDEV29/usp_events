@@ -81,38 +81,60 @@ class _EventDetail extends State<EventDetail> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                            padding: EdgeInsets.symmetric(vertical: 0.0),
-                            child: ListTile(
-                              title: Text(
-                                "${events[index].title}",
-                                style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                textAlign: TextAlign.center,
+                          padding: EdgeInsets.symmetric(vertical: 0.0),
+                          child: ListTile(
+                            title: Text(
+                              "${events[index].title}",
+                              style: TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.w600,
                               ),
-                            )),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0.0,
+                            horizontal: 10.0,
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              "\" ${events[index].theme}\" ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0.0, horizontal: 10.0),
+                          child: ListTile(
+                            title: Text(
+                              "${events[index].eventSchedule}\n\n${events[index].eventDescription}",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                // fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        ),
                         Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 0.0, horizontal: 10.0),
+                              vertical: 0.0,
+                              horizontal: 10.0,
+                            ),
                             child: ListTile(
-                              shape: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.grey),
-                              ),
                               title: Text(
-                                "Event Schedule",
-                                style: TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              subtitle: Text(
-                                "${events[index].eventSchedule}",
+                                "\nVenue\n${events[index].venue}",
                                 style: TextStyle(
                                   fontSize: 20.0,
-                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
@@ -123,105 +145,20 @@ class _EventDetail extends State<EventDetail> {
                               horizontal: 10.0,
                             ),
                             child: ListTile(
-                              shape: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.grey),
-                              ),
-                              title: Text(
-                                "Venue",
-                                style: TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              subtitle: Text(
-                                "${events[index].venue}",
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            )),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 0.0,
-                              horizontal: 10.0,
-                            ),
-                            child: ListTile(
-                              shape: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.grey),
-                              ),
-                              title: Text(
-                                "Theme",
-                                style: TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              subtitle: Text(
-                                "\" ${events[index].theme}\" ",
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            )),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 0.0,
-                              horizontal: 10.0,
-                            ),
-                            child: ListTile(
-                              shape: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.grey),
-                              ),
                               title: Text(
                                 "Speaker",
                                 style: TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20.0,
                                 ),
                               ),
                               subtitle: Text(
                                 "${events[index].speaker}",
                                 style: TextStyle(
                                   fontSize: 20.0,
-                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
                             )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0.0, horizontal: 10.0),
-                          child: ListTile(
-                            title: Text(
-                              "Description",
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.justify,
-                              overflow: TextOverflow.fade,
-                            ),
-                            subtitle: Text(
-                              "${events[index].eventDescription}",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.justify,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
-                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 30.0, horizontal: 10.0),

@@ -29,68 +29,101 @@ class QuizAttempt extends StatelessWidget {
         title: Text(quizID.name),
       ),
       drawer: AppDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: size.height / 1.25,
-              width: size.width,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _firestore
-                    .collection('quizAttemptRoom')
-                    .doc(quizAttemptID)
-                    .collection('quizAttempt')
-                    .orderBy("time", descending: false)
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.data != null) {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        Map<String, dynamic> map = snapshot.data!.docs[index]
-                            .data() as Map<String, dynamic>;
-                        return score(size, map, context, index);
-                      },
-                    );
-                  } else {
-                    return Container(child: Text("No attempts"));
-                  }
-                },
-              ),
-            ),
-            Container(
-              child: MaterialButton(
-                  splashColor: Colors.blue.shade900,
-                  color: Colors.deepOrangeAccent.shade200,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    side: BorderSide(
-                        color: Colors.deepOrangeAccent.shade200, width: 2.0),
+      body: Column(
+        children: [
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                Text('\n\n\n'),
+                Expanded(
+                    child: Text(
+                  "Quiz Attempt\t\t\t\t",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
                   ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                  child: Text(
-                    "Start Attempt",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black,
+                )),
+                Expanded(
+                    child: Text(
+                  "Submitted At",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )),
+                Expanded(
+                    child: Text(
+                  "\t\t\t\t\t\tScore",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )),
+              ],
+            ),
+          ),
+          Expanded(
+            // height: size.height / 1.25,
+            // width: size.width,
+            child: StreamBuilder<QuerySnapshot>(
+              stream: _firestore
+                  .collection('quizAttemptRoom')
+                  .doc(quizAttemptID)
+                  .collection('quizAttempt')
+                  .orderBy("time", descending: false)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.data != null) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> map = snapshot.data!.docs[index]
+                          .data() as Map<String, dynamic>;
+                      return score(size, map, context, index);
+                    },
+                  );
+                } else {
+                  return Text("No attempts");
+                }
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            child: MaterialButton(
+              splashColor: Colors.blue.shade900,
+              color: Colors.deepOrangeAccent.shade200,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+                side: BorderSide(
+                    color: Colors.deepOrangeAccent.shade200, width: 2.0),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+              child: Text(
+                "Start Attempt",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.black,
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                    builder: (context) => QuestionsScreen(
+                      quizID: quizID,
+                      quizAttemptId: quizAttemptID,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                        builder: (context) => QuestionsScreen(
-                          quizID: quizID,
-                          quizAttemptId: quizAttemptID,
-                        ),
-                      ),
-                    );
-                  }),
+                );
+              },
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -104,15 +137,17 @@ class QuizAttempt extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.blue,
+                border: Border(
+                  bottom: BorderSide(width: 0.5),
+                ),
+                //color: Colors.blue,
               ),
               child: Text(
-                "Attempt $index Your final mark for this quiz  ${map['score']}",
+                " ${index + 1} \t\t\t\t${(map['time'] as Timestamp).toDate()}  \t\t\t\t\t\t\t\t\t\t\t\t${map['score']}",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ),

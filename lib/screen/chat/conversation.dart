@@ -76,6 +76,9 @@ class Conversation extends StatelessWidget {
             Container(
               height: size.height / 1.25,
               width: size.width,
+              padding: EdgeInsets.symmetric(
+                vertical: 10.0,
+              ),
               child: StreamBuilder<QuerySnapshot>(
                 stream: _firestore
                     .collection('chatroom')
@@ -116,10 +119,6 @@ class Conversation extends StatelessWidget {
                       child: TextField(
                         controller: _message,
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () {}, // => getImage(),
-                              icon: Icon(Icons.photo),
-                            ),
                             hintText: "Send Message",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),

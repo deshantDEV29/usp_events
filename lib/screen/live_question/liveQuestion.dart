@@ -9,9 +9,11 @@ import 'package:usp_events/model/recipient.dart';
 class LiveQuestion extends StatelessWidget {
   //final Map<String, dynamic> userMap;
   final String sessionId;
+  final String username;
 
   LiveQuestion({
     required this.sessionId,
+    required this.username,
   });
 
   final TextEditingController _question = TextEditingController();
@@ -21,7 +23,7 @@ class LiveQuestion extends StatelessWidget {
   void onSendQuestion() async {
     if (_question.text.isNotEmpty) {
       Map<String, dynamic> questions = {
-        "sendby": _auth.currentUser!.displayName,
+        "sendby": username,
         "message": _question.text,
         "type": "text",
         "time": FieldValue.serverTimestamp(),
@@ -72,6 +74,9 @@ class LiveQuestion extends StatelessWidget {
             Container(
               height: size.height / 1.25,
               width: size.width,
+              padding: EdgeInsets.symmetric(
+                vertical: 10.0,
+              ),
               child: StreamBuilder<QuerySnapshot>(
                 stream: _firestore
                     .collection('liveQuestionRoom')
@@ -148,13 +153,17 @@ class LiveQuestion extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.blue,
               ),
-              child: Text(
-                map['message'],
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+              child: ListTile(
+                leading: Icon(Icons.person_rounded),
+                title: Text(
+                  '${map['sendby']}\n${(map['time'] as Timestamp).toDate().hour}:${(map['time'] as Timestamp).toDate().minute}\n',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
+                subtitle: Text('${map['message']}'),
               ),
             ),
           )

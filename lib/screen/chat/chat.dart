@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:usp_events/model/message.dart';
 import 'package:usp_events/model/recipient.dart';
 import 'package:usp_events/screen/drawer/drawer_state.dart';
 
@@ -18,35 +20,44 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreen extends State<ChatScreen> {
   List<Recipient> _recipient = <Recipient>[];
-  String username = '';
+  List<RecentMessages> recentMessage = <RecentMessages>[];
+  int userID = 0;
+  String finalusername = '';
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<List<Recipient>> getReciepients() async {
+  Future<List<Recipient>> getAllUsers() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var getToken = localStorage.getString('token');
+    print(getToken);
     var token = 'Bearer $getToken';
+
     var getuser = localStorage.getString('user');
-    String turntoString = getuser.toString();
-    print(turntoString);
-    String splituser = turntoString.split(",") as String;
-    username = splituser.substring(2);
+    var getusername = localStorage.getString('username');
+    var splitusername = getusername!.split(":");
+    String getusernameatindex = splitusername.elementAt(1);
+    String username = getusernameatindex.replaceAll('"', '');
+    finalusername = username.replaceAll('}', '');
+    print(finalusername);
 
-    print(splituser);
+    //userID = getuser!.substring(6, getuser.indexOf(',')) as int;
+    print(userID);
+    print("hello");
 
-    var response = await CallApi().getData(token, 'getConversation');
+    String userid = getuser!.substring(6, getuser.indexOf(','));
+    userID = int.parse(userid);
+
+    var response = await CallApi().getData(token, 'displayAllUsers');
 
     if (response.statusCode == 200) {
-      final datasJson = json.decode(response.body)["reciepients"] as List;
-
+      final datasJson = json.decode(response.body)["users"] as List;
       return datasJson.map((js) => Recipient.fromJson(js)).toList();
     } else
       print("http error");
     return [];
   }
 
-  String chatRoomId(String user1, String otheruser) {
-    String user2 = otheruser.toString();
-    if (user1[0].toLowerCase().codeUnits[0] >
-        user2.toLowerCase().codeUnits[0]) {
+  String chatRoomId(int user1, int user2) {
+    if (user1 > user2) {
       return "$user1$user2";
     } else {
       return "$user2$user1";
@@ -55,11 +66,12 @@ class _ChatScreen extends State<ChatScreen> {
 
   @override
   void initState() {
-    getReciepients().then((value) {
+    getAllUsers().then((value) {
       setState(() {
         _recipient.addAll(value);
       });
     });
+
     super.initState();
   }
 
@@ -128,7 +140,7 @@ class _ChatScreen extends State<ChatScreen> {
 
   Widget projectWidget() {
     return FutureBuilder<List<Recipient>>(
-      future: getReciepients(),
+      future: getAllUsers(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
@@ -177,15 +189,17 @@ class _ChatScreen extends State<ChatScreen> {
                                         bottom: BorderSide(
                                             width: 0.5, color: Colors.grey),
                                       ),
-                                      title: Text(
-                                        "${_recipient[index].name}",
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      subtitle: Text('message'),
+                                      // title: Text(
+                                      //   "${re[index].id}",
+                                      //   style: TextStyle(
+                                      //     fontSize: 20.0,
+                                      //     fontWeight: FontWeight.w600,
+                                      //   ),
+                                      //   textAlign: TextAlign.left,
+                                      // ),
+                                      // subtitle: Text(
+                                      //     "${recentMessage[index].message}",
+                                      //     ),
                                       onTap: () {
                                         // String roomId = chatRoomId(
                                         //     username, _recipient[index].name);

@@ -19,11 +19,18 @@ class SessionScreen extends StatefulWidget {
 
 class _SessionScreen extends State<SessionScreen> {
   List<Session> session = <Session>[];
+  String finalusername = "";
 
   Future<List<Session>> displaySession() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var getToken = localStorage.getString('token');
     var token = 'Bearer $getToken';
+    var getusername = localStorage.getString('username');
+    var splitusername = getusername!.split(":");
+    String getusernameatindex = splitusername.elementAt(1);
+    String username = getusernameatindex.replaceAll('"', '');
+    finalusername = username.replaceAll('}', '');
+    print(finalusername);
 
     var data = {
       'id': widget.event.eventid,
@@ -84,18 +91,20 @@ class _SessionScreen extends State<SessionScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 0.0),
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
                         child: ListTile(
+                          leading: Icon(Icons.link),
                           title: Text(
-                            "${session[index].date}",
+                            "${session[index].date} at ${session[index].time} (FJT)",
                             style: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            textAlign: TextAlign.center,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                                decoration: TextDecoration.underline,
+                                color: Colors.green),
+                            textAlign: TextAlign.left,
                           ),
                           subtitle: Text(
-                            "${session[index].time}",
+                            "",
                             style: TextStyle(
                               fontSize: 30.0,
                               fontWeight: FontWeight.w600,
@@ -111,6 +120,7 @@ class _SessionScreen extends State<SessionScreen> {
                               new MaterialPageRoute(
                                 builder: (context) => LiveQuestion(
                                   sessionId: roomId,
+                                  username: finalusername,
                                 ),
                               ),
                             );

@@ -48,7 +48,7 @@ class _AllPeoplescreen extends State<AllPeoplescreen> {
       final datasJson = json.decode(response.body)["users"] as List;
       return datasJson.map((js) => Recipient.fromJson(js)).toList();
     } else
-      print("http error"); 
+      print("http error");
     return [];
   }
 
