@@ -16,6 +16,8 @@ class LiveQuestion extends StatelessWidget {
     required this.username,
   });
 
+  DateTime now = DateTime.now();
+
   final TextEditingController _question = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -156,7 +158,7 @@ class LiveQuestion extends StatelessWidget {
               child: ListTile(
                 leading: Icon(Icons.person_rounded),
                 title: Text(
-                  '${map['sendby']}\n${(map['time'] as Timestamp).toDate().hour}:${(map['time'] as Timestamp).toDate().minute}\n',
+                  '${map['sendby']}\n${(map['time'] as Timestamp).toDate().toString().substring(11, 16)}',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

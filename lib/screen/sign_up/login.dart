@@ -205,6 +205,7 @@ class _LoginState extends State<Login> {
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
       localStorage.setString('username', json.encode(body['username']));
+      localStorage.setString('email', json.encode(body['email']));
       Navigator.push(
           context, new MaterialPageRoute(builder: (context) => Homepage()));
     } else {

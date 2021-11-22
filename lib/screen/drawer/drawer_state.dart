@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 import 'package:usp_events/methods/method.dart';
+import 'package:usp_events/screen/FAQ/faq.dart';
 import 'package:usp_events/screen/chat/chat.dart';
 import 'package:usp_events/screen/events_des/homepage.dart';
 import 'package:usp_events/screen/quiz/quiz_screen.dart';
@@ -15,11 +18,10 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  void getUsername() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var data = localStorage.getString('user');
-    print(data);
-  }
+  String finalusername = '';
+  String finalemail = '';
+  var firebaseUser = FirebaseAuth.instance.currentUser!;
+  final FirebaseFirestore database = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class _AppDrawerState extends State<AppDrawer> {
         children: [
           const UserAccountsDrawerHeader(
             accountEmail: Text('@User'),
-            accountName: Text('user'),
+            accountName: Text('User'),
             decoration: BoxDecoration(
               color: Colors.cyan,
             ),
@@ -75,6 +77,20 @@ class _AppDrawerState extends State<AppDrawer> {
                 MaterialPageRoute(
                   builder: (context) {
                     return QuizScreen();
+                  },
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.question_answer),
+            title: const Text('FAQ'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return FAQScreen();
                   },
                 ),
               );

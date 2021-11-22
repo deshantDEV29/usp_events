@@ -269,6 +269,8 @@ class _SignupState extends State<Signup> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['token']);
       localStorage.setString('user', json.encode(body['user']));
+      localStorage.setString('username', json.encode(body['username']));
+      localStorage.setString('email', json.encode(body['email']));
       Navigator.push(
           context, new MaterialPageRoute(builder: (context) => Homepage()));
     }

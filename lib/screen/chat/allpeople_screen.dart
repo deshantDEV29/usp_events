@@ -193,6 +193,10 @@ class _AllPeoplescreen extends State<AllPeoplescreen> {
                                               chatRoomId: roomId,
                                               recipient: _recipient[index].name,
                                               username: finalusername,
+                                              recipientID: _recipient[index]
+                                                  .id
+                                                  .toString(),
+                                              userID: userID.toString(),
                                             ),
                                           ),
                                         );

@@ -251,6 +251,10 @@ class _PeopleScreen extends State<PeopleScreen> {
                                                 recipient:
                                                     _recipient[index].name,
                                                 username: finalusername,
+                                                recipientID: _recipient[index]
+                                                    .tokenableId
+                                                    .toString(),
+                                                userID: userID.toString(),
                                               ),
                                             ),
                                           );

@@ -77,6 +77,7 @@ class _ChatScreen extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade600,
@@ -189,6 +190,7 @@ class _ChatScreen extends State<ChatScreen> {
                                         bottom: BorderSide(
                                             width: 0.5, color: Colors.grey),
                                       ),
+                                      title: Text(_recipient[index].name),
                                       // title: Text(
                                       //   "${re[index].id}",
                                       //   style: TextStyle(
@@ -197,20 +199,28 @@ class _ChatScreen extends State<ChatScreen> {
                                       //   ),
                                       //   textAlign: TextAlign.left,
                                       // ),
-                                      // subtitle: Text(
-                                      //     "${recentMessage[index].message}",
-                                      //     ),
+                                      subtitle: Text(
+                                        "Message",
+                                      ),
                                       onTap: () {
-                                        // String roomId = chatRoomId(
-                                        //     username, _recipient[index].name);
-                                        // Navigator.push(
-                                        //     context,
-                                        //     new MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             Conversation(
-                                        //               chatRoomId: roomId,
-                                        //               userMap: {},
-                                        //             )));
+                                        String roomId = chatRoomId(
+                                            userID, _recipient[index].id);
+                                        Navigator.push(
+                                            context,
+                                            new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Conversation(
+                                                      chatRoomId: roomId,
+                                                      recipient:
+                                                          _recipient[index]
+                                                              .name,
+                                                      recipientID:
+                                                          _recipient[index]
+                                                              .id
+                                                              .toString(),
+                                                      userID: userID.toString(),
+                                                      username: finalusername,
+                                                    )));
                                       },
                                     ),
                                   ),

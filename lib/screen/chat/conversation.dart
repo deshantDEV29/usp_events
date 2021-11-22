@@ -11,11 +11,15 @@ class Conversation extends StatelessWidget {
   final String chatRoomId;
   final String recipient;
   final String username;
+  final String recipientID;
+  final String userID;
 
   Conversation({
     required this.chatRoomId,
     required this.recipient,
     required this.username,
+    required this.recipientID,
+    required this.userID,
   });
 
   final TextEditingController _message = TextEditingController();
@@ -36,6 +40,12 @@ class Conversation extends StatelessWidget {
           .collection('chatroom')
           .doc(chatRoomId)
           .collection('chats')
+          .add(messages);
+
+      await _firestore
+          .collection('userChatroom')
+          .doc(userID)
+          .collection(recipient)
           .add(messages);
     } else {
       print("Enter Some Text");
@@ -144,21 +154,25 @@ class Conversation extends StatelessWidget {
             alignment: map['sendby'] == username
                 ? Alignment.centerRight
                 : Alignment.centerLeft,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.blue,
-              ),
-              child: Text(
-                map['message'],
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    '${map['message']}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           )
         : Container(
