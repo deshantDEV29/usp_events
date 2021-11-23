@@ -25,13 +25,14 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    var userData = currentUserData;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const UserAccountsDrawerHeader(
-            accountEmail: Text('@User'),
-            accountName: Text('User'),
+          UserAccountsDrawerHeader(
+            accountEmail: Text(userData.userEmail),
+            accountName: Text(userData.userName),
             decoration: BoxDecoration(
               color: Colors.cyan,
             ),

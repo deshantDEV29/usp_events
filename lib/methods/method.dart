@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:usp_events/model/user.dart';
 
 Future<User?> createAccount(String name, String email, String password) async {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -69,4 +70,23 @@ Future logOut() async {
   } catch (e) {
     print("error");
   }
+}
+
+UserModel currentData = new UserModel("", "");
+
+void getUserData() async {
+  UserModel user;
+  var value = await FirebaseFirestore.instance
+      .collection("users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .get();
+  if (value.exists) {
+    user = UserModel(value.get("name"), value.get("email"));
+    currentData = user;
+  }
+  print(currentData.userEmail);
+}
+
+UserModel get currentUserData {
+  return currentData;
 }

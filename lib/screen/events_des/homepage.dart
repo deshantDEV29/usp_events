@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
+import 'package:usp_events/methods/method.dart';
 import 'package:usp_events/model/eventstitle.dart';
 
 import '../drawer/drawer_state.dart';
@@ -40,6 +41,7 @@ class _Homepage extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    getUserData();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade600,
