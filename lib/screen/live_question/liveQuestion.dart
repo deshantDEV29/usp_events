@@ -1,11 +1,9 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:usp_events/model/recipient.dart';
 
+// ignore: must_be_immutable
 class LiveQuestion extends StatelessWidget {
   //final Map<String, dynamic> userMap;
   final String sessionId;
@@ -20,7 +18,6 @@ class LiveQuestion extends StatelessWidget {
 
   final TextEditingController _question = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void onSendQuestion() async {
     if (_question.text.isNotEmpty) {

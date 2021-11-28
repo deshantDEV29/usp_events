@@ -19,8 +19,6 @@ class _SignupState extends State<Signup> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -251,9 +249,6 @@ class _SignupState extends State<Signup> {
       emailController.text,
       passwordController.text,
     );
-    setState(() {
-      _isLoading = true;
-    });
 
     var data = {
       'name': nameController.text,
@@ -274,9 +269,5 @@ class _SignupState extends State<Signup> {
       Navigator.push(
           context, new MaterialPageRoute(builder: (context) => Homepage()));
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 }

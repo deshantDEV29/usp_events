@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 import 'package:usp_events/model/events.dart';
-import 'package:usp_events/model/eventstitle.dart';
 import 'package:usp_events/model/session.dart';
 
 import '../drawer/drawer_state.dart';
@@ -39,7 +38,7 @@ class _SessionScreen extends State<SessionScreen> {
     var response = await CallApi().postEventData(data, 'getSessions', token);
 
     print(response.body);
-    var notes = <Session>[];
+    //var notes = <Session>[];
 
     if (response.statusCode == 200) {
       final datasJson = json.decode(response.body)["sessions"] as List;

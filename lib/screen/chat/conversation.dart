@@ -2,9 +2,7 @@
 import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:usp_events/model/recipient.dart';
 
 class Conversation extends StatelessWidget {
   //final Map<String, dynamic> userMap;

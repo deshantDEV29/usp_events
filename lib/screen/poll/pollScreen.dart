@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 import 'package:usp_events/screen/drawer/drawer_state.dart';
@@ -14,7 +13,7 @@ class PollScreen extends StatefulWidget {
   const PollScreen({Key? key}) : super(key: key);
 
   @override
-  State<PollScreen> createState() => _pollPageState();
+  State<PollScreen> createState() => PollPageState();
 }
 
 Future<Poll> fetchPoll() async {
@@ -57,7 +56,7 @@ class Poll {
 
 enum OptionCharacter { option_1, option_2 }
 
-class _pollPageState extends State<PollScreen> {
+class PollPageState extends State<PollScreen> {
   late Future<Poll> futurePoll;
   OptionCharacter? _character = OptionCharacter.option_1;
 

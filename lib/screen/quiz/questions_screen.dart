@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
@@ -23,9 +22,8 @@ class QuestionsScreen extends StatefulWidget {
 class _Questions extends State<QuestionsScreen> {
   List<Question> _question = <Question>[];
   String userAnswer = "";
-  int Quiz_id = 0;
+  int quizId = 0;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<List<Question>> getQuestion() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -35,7 +33,7 @@ class _Questions extends State<QuestionsScreen> {
     var data = {
       'id': widget.quizID.id,
     };
-    Quiz_id = widget.quizID.id;
+    quizId = widget.quizID.id;
 
     var response = await CallApi().postEventData(data, 'getQuestions', token);
 
@@ -268,7 +266,8 @@ class _Questions extends State<QuestionsScreen> {
       }
     }
     double finalscore = ((score / total) * 100);
-    String finalscore2 = finalscore.toString();
+
+    String finalscore2 = finalscore.round().toString();
 
     Map<String, dynamic> quizAttempt = {
       "score": finalscore2,
@@ -285,7 +284,7 @@ class _Questions extends State<QuestionsScreen> {
         context,
         new MaterialPageRoute(
             builder: (context) =>
-                ScoreScreen(quizID: Quiz_id, score: finalscore)));
+                ScoreScreen(quizID: quizId, score: finalscore)));
     print(finalscore);
   }
 }

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
-import 'package:usp_events/model/eventstitle.dart';
 import 'package:usp_events/model/faq.dart';
 
 import '../drawer/drawer_state.dart';

@@ -16,8 +16,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool _isLoading = false;
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -185,10 +183,6 @@ class _LoginState extends State<Login> {
   }
 
   void _login() async {
-    setState(() {
-      _isLoading = true;
-    });
-
     logIn(emailController.text, passwordController.text);
 
     var data = {
@@ -212,9 +206,5 @@ class _LoginState extends State<Login> {
       _showMsg(body['message']);
       print(body['message']);
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 }

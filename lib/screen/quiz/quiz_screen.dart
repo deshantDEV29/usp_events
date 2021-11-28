@@ -7,7 +7,6 @@ import 'package:usp_events/model/quiz.dart';
 import 'package:usp_events/screen/quiz/quizAttempt.dart';
 
 import '../drawer/drawer_state.dart';
-import 'questions_screen.dart';
 
 class QuizScreen extends StatefulWidget {
   _QuizScreen createState() => _QuizScreen();

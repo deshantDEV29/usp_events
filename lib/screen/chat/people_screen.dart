@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usp_events/api/api.dart';
 import 'package:usp_events/model/activeRecipient.dart';
-import 'package:usp_events/model/people.dart';
-import 'package:usp_events/model/recipient.dart';
 
 import '../drawer/drawer_state.dart';
 import 'allpeople_screen.dart';

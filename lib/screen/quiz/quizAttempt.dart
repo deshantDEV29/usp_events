@@ -1,13 +1,9 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:usp_events/api/api.dart';
-import 'package:usp_events/model/question.dart';
+
 import 'package:usp_events/model/quiz.dart';
 import 'package:usp_events/screen/quiz/questions_screen.dart';
-import 'package:usp_events/screen/quiz/score.dart';
 
 import '../drawer/drawer_state.dart';
 
@@ -143,7 +139,7 @@ class QuizAttempt extends StatelessWidget {
                 //color: Colors.blue,
               ),
               child: Text(
-                " ${index + 1} \t\t\t\t${(map['time'] as Timestamp).toDate()}  \t\t\t\t\t\t\t\t\t\t\t\t${map['score']}",
+                " ${index + 1} \t\t\t\t${(map['time'] as Timestamp).toDate()}  \t\t\t\t\t\t\t\t\t\t\t\t${map['score']}%",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
