@@ -9,6 +9,7 @@ import 'package:usp_events/methods/method.dart';
 import 'package:usp_events/screen/FAQ/faq.dart';
 import 'package:usp_events/screen/chat/chat.dart';
 import 'package:usp_events/screen/events_des/homepage.dart';
+import 'package:usp_events/screen/poll/pollScreen.dart';
 import 'package:usp_events/screen/quiz/quiz_screen.dart';
 import 'package:usp_events/screen/sign_up/login.dart';
 
@@ -78,6 +79,20 @@ class _AppDrawerState extends State<AppDrawer> {
                 MaterialPageRoute(
                   builder: (context) {
                     return QuizScreen();
+                  },
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.poll),
+            title: const Text('Poll'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PollScreen();
                   },
                 ),
               );
