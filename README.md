@@ -5,7 +5,8 @@ USP events mobile app was made for my third year IT project. The features of the
 #User Interface
 
 
-![viber_image_2021-12-09_19-25-50-535](https://user-images.githubusercontent.com/89639206/145370057-e91a6d24-b440-4d6a-9b04-24fc3d3c908f.png)![viber_image_2021-12-09_19-26-01-248](https://user-images.githubusercontent.com/89639206/145370096-72422676-3780-4589-944b-fe17bd3975e7.png)
+<img src="https://user-images.githubusercontent.com/89639206/145370057-e91a6d24-b440-4d6a-9b04-24fc3d3c908f.png" width="100" height="100">
+![viber_image_2021-12-09_19-26-01-248](https://user-images.githubusercontent.com/89639206/145370096-72422676-3780-4589-944b-fe17bd3975e7.png)
 ![viber_image_2021-12-09_19-25-51-445](https://user-images.githubusercontent.com/89639206/145370124-47afd352-af83-4153-ac2f-cb7f6057d6dc.png)
 ![viber_image_2021-12-09_19-25-52-610](https://user-images.githubusercontent.com/89639206/145370168-d427c614-05f1-4d1b-a191-5f392fdeb976.png)
 ![viber_image_2021-12-09_19-25-53-584](https://user-images.githubusercontent.com/89639206/145370173-9431290a-d3f6-4fae-9214-72cb487860b2.png)
