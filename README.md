@@ -2,7 +2,7 @@
 
 USP events mobile app was made for my third year IT project. The features of the app included chat,quiz,event description,live question and answer session. 
 
-##User Interface
+#User Interface
 
 
 ![viber_image_2021-12-09_19-25-50-535](https://user-images.githubusercontent.com/89639206/145370057-e91a6d24-b440-4d6a-9b04-24fc3d3c908f.png)
